@@ -1,0 +1,689 @@
+package org.chess.pgn;
+
+import java.util.TreeMap;
+
+import org.chess.pgn.FIDERecord.Activity;
+import org.chess.pgn.FIDERecord.Sex;
+
+public class ChessGame {
+	
+	// modifié le 21 août à 15h50. 
+	
+    private String msEvent="?";
+    private String msSite="?";
+    private String msDate="????.??.??";
+    private String msRound="?";
+    private String msWhite="?";
+    private String msBlack="?";
+    private String msResult="*";
+    private String msAnnotator="?";
+    private String msBlackElo="?";
+    private String msBlackNA="?"; 
+    private String msBlackTitle="?";
+    private String msBlackType="?"; 
+    private String msBoard="?";
+    private String msECO="?";
+    private String msEventDate="????.??.??"; 
+    private String msEventSponsor="?"; 
+    private String msFEN="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    private String msMode="?"; 
+    private String msMoveSection="*";
+    private String msNIC="?";
+    private String msOpening="?";
+//    private String msPlyCount="?"; 
+    private String msSection="?"; 
+    private String msSetUp="0";
+    private String msStage="?"; 
+    private String msSubVariation="?";
+    private String msTermination="normal"; 
+    private String msTime="??:??:??"; 
+    private String msTimeControl="?";
+    private String msUTCDate="????.??.??"; 
+    private String msUTCTime="??:??:??"; 
+    private String msVariation="?";
+    private String msWhiteElo="?";
+    private String msWhiteNA="?"; 
+    private String msWhiteTitle="?";
+    private String msWhiteType="?";
+
+    
+	private TreeMap<String, String> mmapCustomTagPair = new TreeMap<String, String>();
+
+    // Custom tags.
+    // TODO: remove custom tags from code.
+//    private String msWhiteTeam="";
+//    private String msBlackTeam="";
+//    private String msWhiteFRBEKBSB="";
+//    private String msBlackFRBEKBSB="";
+
+    
+    
+    
+    public ChessGame() {
+    	msEvent="?";
+    	msSite="?";
+    	msDate="????.??.??";
+    	msRound="?";
+    	msWhite="?";
+    	msBlack="?";
+    	msResult="*";
+    }
+    public void setEvent(String sEvent) {
+        msEvent=sEvent;
+    }
+    public String getEvent() {
+        return msEvent;
+    }
+    public void setSite(String sSite) {
+        msSite=sSite;
+    }
+    public String getSite() {
+        return msSite;
+    }
+    public boolean setDate(String sDate) {
+        boolean bReturnValue=false;
+
+//        if (sDate.matches("(\\?{4}|\\d{4})\\.(\\?\\?|0[1-9]|1[0-2])\\.(\\?\\?|0[1-9]|[12]\\d|3(0|1))")) {	// Allows thinks like "2012.04.31" or "2011.02.29" but goes faster.
+//            msDate=sDate;
+//            bReturnValue=true;
+//        }
+        if (sDate.matches("(\\d{4}|\\?{4})\\.(\\d{2}|\\?{2})\\.(\\d{2}|\\?{2})")) {	// Allows thinks like "2012.04.31" or "2011.02.29" but goes faster.
+            msDate=sDate;
+            bReturnValue=true;
+        }
+        
+//        /* Year. */
+//        if (sDate.matches("\\d\\d\\d\\d.*") || sDate.startsWith("????")) {
+//            /* Month and dots. */
+//            int nMonth=0;
+//            if ((sDate.matches("....\\.\\d\\d\\...")&&(nMonth=Integer.parseInt(sDate.substring(5,7))-1)<12&&nMonth>-1) || sDate.matches("....\\.\\?\\?\\...")) {
+//                /* Day. */
+//                int[] anDaysInMonth={31,28,31,30,31,30,31,31,30,31,30,31};
+//                if ((sDate.matches(".*\\d\\d")&&Integer.parseInt(sDate.substring(8,10))<=anDaysInMonth[nMonth]) || sDate.endsWith("??")) {
+//                    msDate=sDate;
+//                    bReturnValue=true;
+//                }
+//            }
+//        }
+        return bReturnValue;
+    }
+    public String getDate() {
+        return msDate;
+    }
+    public void setRound(String sRound) {
+        msRound=sRound;
+    }
+    public String getRound() {
+        return msRound;
+    }
+    public void setWhite(String sName) {
+        msWhite=sName;
+    }
+    public String getWhite() {
+        return msWhite;
+    }
+    public void setBlack(String sName) {
+        msBlack=sName;
+    }
+    public String getBlack() {
+        return msBlack;
+    }
+    public boolean setResult(String sResult) {
+        boolean bReturnValue=false;
+        
+        if (sResult.equals("0-1") || sResult.equals("1/2-1/2") || sResult.equals("1-0") || sResult.equals("*")) {
+            msResult=sResult;
+            bReturnValue=true;
+        }
+        return bReturnValue;
+    }
+    public String getResult() {
+        return msResult;
+    }
+    public boolean setWhiteTitle(String sTitle) {
+        boolean bReturnValue=false;
+        
+//        if (sTitle.matches("(^\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*$")) {
+//      if (sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
+    	  if (sTitle.equals("-") || sTitle.equals("?") || sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
+//       if (sTitle.equals("-") || sTitle.equals("?") || sTitle.equals("FM") || sTitle.equals("IM") || sTitle.equals("GM") || sTitle.equals("WFM") || sTitle.equals("WIM") || sTitle.equals("WGM")) {
+            msWhiteTitle=sTitle;
+            bReturnValue=true;
+        } 
+        return bReturnValue;
+    }
+    public String getWhiteTitle() {
+        return msWhiteTitle;
+    }
+    public boolean setBlackTitle(String sTitle) {
+        boolean bReturnValue=false;
+        
+//        if (sTitle.matches("^(\\-|W?(C|F|I|G)M|\\?)(:\\-|W?(C|F|I|G)M|\\?)*$")) {
+//      if (sTitle.matches("(^\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*$")) {
+//      if (sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
+    	  if (sTitle.equals("-") || sTitle.equals("?") || sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
+//          if (sTitle.equals("-") || sTitle.equals("?") || sTitle.equals("FM") || sTitle.equals("IM") || sTitle.equals("GM") || sTitle.equals("WFM") || sTitle.equals("WIM") || sTitle.equals("WGM")) {
+            msBlackTitle=sTitle;
+            bReturnValue=true;
+        } 
+        return bReturnValue;
+    }
+    public String getBlackTitle() {
+        return msBlackTitle;
+    }
+    public void setWhiteElo(String sElo) {
+        msWhiteElo=sElo;
+    }
+    public String getWhiteElo() {
+        return msWhiteElo;
+    }
+    public void setBlackElo(String sElo) {
+        msBlackElo=sElo;
+    }
+    public String getBlackElo() {
+        return msBlackElo;
+    }
+//    public void setWhiteFRBEKBSB(String sRating) {
+//        msWhiteFRBEKBSB=sRating;
+//    }
+//    public String getWhiteFRBEKBSB() {
+//        return msWhiteFRBEKBSB;
+//    }
+//    public void setBlackFRBEKBSB(String sRating) {
+//        msBlackFRBEKBSB=sRating;
+//    }
+//    public String getBlackFRBEKBSB() {
+//        return msBlackFRBEKBSB;
+//    }
+//    public void setWhiteTeam(String sTeam) {
+//        msWhiteTeam=sTeam;
+//    }
+//    public String getWhiteTeam() {
+//        return msWhiteTeam;
+//    }
+//    public void setBlackTeam(String sTeam) {
+//        msBlackTeam=sTeam;
+//    }
+//    public String getBlackTeam() {
+//        return msBlackTeam;
+//    }
+    public boolean setSetUp(String sSetUp) {
+        boolean bReturnValue=false;
+        
+        if (sSetUp.equals("0") || sSetUp.equals("1")) {
+            msSetUp=sSetUp;
+            bReturnValue=true;
+        }
+        return bReturnValue;
+    }
+    public String getSetUp() {
+        return msSetUp;
+    }
+    public void setFEN(String sFEN) {
+        msFEN=sFEN;
+    }
+    public String getFEN() {
+        return msFEN;
+    }
+    public boolean setTimeControl(String sTimeControl) {
+    	boolean bReturnValue=false;
+        
+//    	if (sTimeControl.matches("\\?|-|\\*?[1-9][0-9]*|[1-9][0-9]*\\+[1-9][0-9]*|([1-9][0-9]*/[1-9][0-9]*)(:[1-9][0-9]*/[1-9][0-9]*)*(:(\\*?[1-9][0-9]*)|([1-9][0-9]*\\+[1-9][0-9]*))?")) {
+    	if (sTimeControl.matches("(-|\\d+/\\d+:)*(\\*?\\d+|(\\d+(/|\\+)\\d+))|\\?")) {
+        	msTimeControl=sTimeControl;
+        	bReturnValue=true;
+    	}
+    	return bReturnValue;
+    }
+    public String getTimeControl() {
+        return msTimeControl;
+    }
+    private String convertS2DHMinS(int nTime) {
+        String sReturnValue="";
+
+        int nDays = nTime / 86400;
+        int nHours = (nTime % 86400) / 3600;
+        int nMinutes = (nTime % 3600) / 60;
+        int nSeconds = (nTime % 60);
+
+        if (nDays > 0) {
+           sReturnValue += " " + String.valueOf(nDays) + " j";
+        }
+        if (nHours > 0) {
+           sReturnValue += " " + String.valueOf(nHours) + " h";
+        }
+        if (nMinutes > 0) {
+           if (nDays > 0 || nHours == 0 || nSeconds > 0) {
+              sReturnValue += " " + String.valueOf(nMinutes) + " min";
+           }
+           else {
+              sReturnValue += " " + String.valueOf(nMinutes);
+           }
+        }
+        if (nSeconds > 0) {
+           sReturnValue += " " + String.valueOf(nSeconds) + " s";
+        }
+
+        return sReturnValue;
+     }
+     public String getTimeControlInFrench() {
+
+        // ?
+        // -          Pas de contrôle temps = Aucun
+        // 300        $300/60$ min
+        // *180       $180/60$ min / coup
+        // 5400+30    $5400/3600$ h $(5400 mod 3600)/60$ min + $30$ s / coup
+        // 40/7200    40 coups / $7200/3600$ h
+
+        // 40/7200:3600'  --> 40 coups / 2 h, 1 h KO
+
+        // REM: < 15 min --> blitz
+        // REM: <= 60 --> partie rapide
+
+
+        // DISCARD (time control unknown or no time control)
+        if (msTimeControl=="?" || msTimeControl=="-") { 
+           return msTimeControl;
+        }
+
+
+        String sReturnValue = "";
+        String sMoves;
+        String sTime;
+        int nMainTime;
+        int nIncrementTime;
+        int nMoves;
+        int nTime;
+        int nTotalMoves = 0;
+        int nTotalTime = 0;
+        String sCurrentControl;
+        String[] asTimeControl = msTimeControl.split(":");
+        for (int nI = 0; nI < asTimeControl.length; nI++) {
+           if (nI > 0) {
+              sReturnValue += ",";
+           }
+           sCurrentControl = asTimeControl[nI];
+           // N/N (n moves in n seconds)
+           if (sCurrentControl.indexOf('/')!=-1) {
+              sMoves=sCurrentControl.substring(0,sCurrentControl.indexOf('/'));
+              sReturnValue+=sMoves;
+              nMoves = Integer.parseInt(sMoves);
+              if (nMoves>1) {
+                 sReturnValue+= " coups /";
+              }
+              else {
+                 sReturnValue+= " coup /";
+              }
+              sTime = sCurrentControl.substring(sCurrentControl.indexOf('/') + 1, sCurrentControl.length());
+              nTime=Integer.parseInt(sTime);
+              sReturnValue += convertS2DHMinS(nTime);
+              nTotalMoves += nMoves;
+              nTotalTime += nMoves * nTime;
+           }
+           else {
+           // N+N (incremental)
+              if (sCurrentControl.indexOf('+') != -1) {
+                 nMainTime = Integer.parseInt(sCurrentControl.substring(0, sCurrentControl.indexOf('+')));
+                 sReturnValue += convertS2DHMinS(nMainTime);
+                 nIncrementTime = Integer.parseInt(sCurrentControl.substring(sCurrentControl.indexOf('+') + 1, sCurrentControl.length()));
+                 sReturnValue += " + " + convertS2DHMinS(nIncrementTime) + " / coup";
+                 nTotalTime += nMainTime + 60 * nIncrementTime;
+              }
+              else {
+           // *N (hourglass)
+                 if (sCurrentControl.startsWith("*")) {
+                    nTime = Integer.parseInt(sCurrentControl.substring(1, sCurrentControl.length()));
+                    sReturnValue += convertS2DHMinS(nTime) + " / coup";
+                    nTotalTime+=(60-nTotalMoves)*nTime;
+                 }
+           // N (sudden death)
+                 else {
+                    nTime = Integer.parseInt(sCurrentControl);
+                    sReturnValue += convertS2DHMinS(nTime);
+                    if (nI>0 && nI == asTimeControl.length - 1) {   // Last control.
+                       sReturnValue+= " KO";
+                    }
+                    nTotalTime += nTime;
+                 }
+              }
+           }
+        }
+
+
+        // ADD "(blitz)" OR "(partie rapide)" COMMENT. 
+        if (nTotalTime < 900) {   // nTotalTime < 15 minutes => blitz
+           sReturnValue += " (blitz)";
+        }
+        else {
+           if (nTotalTime < 3601) { // 15 min <= nTotalTime <= 1 hour
+              sReturnValue += " (partie rapide)";
+           }
+        }
+
+        return sReturnValue;
+     }
+    public boolean setECO(String sECO) {
+        boolean bReturnValue=false;
+
+        if (sECO.matches("[A-E]\\d\\d*")) {
+            msECO=sECO;
+            bReturnValue=true;
+        }
+        return bReturnValue;
+    }
+    public String getECO() {
+        return msECO;
+    }
+    public boolean setNIC(String sNIC) {
+        boolean bReturnValue=false;
+        if ((sNIC.matches("[A-Z][A-Z] \\d\\d?") || sNIC.matches("[A-Z][A-Z] \\d[0-9]?\\.\\d\\d?") || sNIC.matches("[A-Z][A-Z] \\d\\d?\\.\\d\\d?\\.\\d\\d?"))) {
+            msNIC=sNIC;
+            bReturnValue=true;
+        }
+        return bReturnValue;
+    }
+    public String getNIC() {
+        return msNIC;
+    }
+    public void setOpening(String sOpening) {
+        msOpening=sOpening;
+    }
+    public String getOpening() {
+        return msOpening;
+    }
+    public void setVariation(String sVariation) {
+        msVariation=sVariation;
+    }
+    public String getVariation() {
+        return msVariation;
+    }
+    public void setSubVariation(String sSubVariation) {
+    	msSubVariation = sSubVariation;
+    }
+    public String getSubVariation() {
+    	return msSubVariation;
+    }
+    public String getAnnotator() {
+    	return msAnnotator;
+    }
+    public void setAnnotator(String sAnnotator) {
+    	msAnnotator = sAnnotator;
+    }
+    public String getBoard() {
+    	return msBoard;
+    }
+    public void setBoard(String sBoard) {
+    	msBoard = sBoard;
+    }
+    public String getTime() {
+    	return msTime;
+    }
+    public void setTime(String sTime) {
+//    	if (sTime.matches("(\\?\\?|[01][0-9]|2[0-3]):(\\?\\?|[0-5][0-9]):(\\?\\?|[0-5][0-9])")) {
+        	msTime = sTime;
+//        	bReturnValue=true;
+//    	}
+    }
+    public String getSection() {
+    	return msSection;
+    }
+    public void setSection(String sSection) {
+    	msSection = sSection;
+    }
+    public String getTermination() {
+    	return msTermination;
+    }
+    public void setTermination(String sTermination) {
+    	if (sTermination.matches("abandoned|adjudication|death|emergency|normal|rules infraction|time forfeit|unterminated")) {
+        	msTermination = sTermination;
+    	}
+    	else {
+    		msTermination="normal";
+    	}
+    }
+    public String getWhiteNA() {
+    	return msWhiteNA;
+    }
+    public void setWhiteNA(String sWhiteNA) {
+    	msWhiteNA = sWhiteNA;
+    }
+    public String getWhiteType() {
+    	return msWhiteType;
+    }
+    public void setWhiteType(String sWhiteType) {
+    	msWhiteType = sWhiteType;
+    }
+    public String getBlackNA() {
+    	return msBlackNA;
+    }
+    public void setBlackNA(String sBlackNA) {
+    	msBlackNA = sBlackNA;
+    }
+    public String getBlackType() {
+    	return msBlackType;
+    }
+    public void setBlackType(String sBlackType) {
+    	msBlackType = sBlackType;
+    }
+    public String getPlyCount() {
+    	String sReturnValue="0";
+    	
+    	if (!msMoveSection.equals("*")) {
+    		// TODO: reinforce PlyCount computation (NAGs, comments, ...).
+    		sReturnValue=String.valueOf((msMoveSection.split(" ").length-1)*2/3);
+    	}
+    	return sReturnValue;
+    }
+//    public void setPlyCount(String sPlyCount) {
+//    	msPlyCount = sPlyCount;
+//    }
+    public String getMode() {
+    	return msMode;
+    }
+    public void setMode(String sMode) {
+    	msMode = sMode;
+    }
+    public String getEventDate() {
+    	return msEventDate;
+    }
+    public void setEventDate(String sEventDate) {
+    	msEventDate = sEventDate;
+    }
+    public String getEventSponsor() {
+    	return msEventSponsor;
+    }
+    public void setEventSponsor(String sEventSponsor) {
+    	msEventSponsor = sEventSponsor;
+    }
+    public String getStage() {
+    	return msStage;
+    }
+    public void setStage(String sStage) {
+    	msStage = sStage;
+    }
+    public String getUTCDate() {
+    	return msUTCDate;
+    }
+    public void setUTCDate(String sUTCDate) {
+    	msUTCDate = sUTCDate;
+    }
+    public String getUTCTime() {
+    	return msUTCTime;
+    }
+    public void setUTCTime(String sUTCTime) {
+    	msUTCTime = sUTCTime;
+    }
+    public void setMoveSection(String sMoveSection) {
+    	msMoveSection = sMoveSection;
+    }
+    public String getMoveSection() {
+    	return msMoveSection;
+    }
+    public void reset() {
+        msEvent="";
+        msSite="";
+        msDate="";
+        msRound="";
+        msWhite="";
+        msBlack="";
+        msResult="";
+        msWhiteTitle="";
+        msBlackTitle="";
+        msWhiteElo="";
+        msBlackElo="";
+        msSetUp="";
+        msFEN="";
+        msTimeControl="";
+        msECO="";
+        msNIC="";
+        msOpening="";
+        msVariation="";
+        msSubVariation="";
+        msAnnotator="";
+        msBoard="";
+        msTime=""; 
+        msSection=""; 
+        msStage=""; 
+        msTermination=""; 
+        msEventDate=""; 
+        msWhiteNA=""; 
+        msBlackNA=""; 
+        msWhiteType=""; 
+        msBlackType=""; 
+        msEventSponsor=""; 
+        msMode=""; 
+//        msPlyCount=""; 
+        msUTCDate=""; 
+        msUTCTime=""; 
+        msMoveSection="";
+    }
+    @Override public String toString() {
+        StringBuilder sbResult = new StringBuilder();
+
+        sbResult.append(this.getClass().getName() + " Object {\r\n");
+        sbResult.append("[Event: \"");
+        sbResult.append(this.getEvent());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Site: \"");
+        sbResult.append(this.getSite());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Date: \"");
+        sbResult.append(this.getDate());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Round: \"");
+        sbResult.append(this.getRound());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[White: \"");
+        sbResult.append(this.getWhite());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Black: \"");
+        sbResult.append(this.getBlack());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Result: \"");
+        sbResult.append(this.getResult());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Annotator: \"");
+        sbResult.append(this.getAnnotator());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[BlackElo: \"");
+        sbResult.append(this.getBlackElo());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[BlackNA: \"");
+        sbResult.append(this.getBlackNA());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[BlackTitle: \"");
+        sbResult.append(this.getBlackTitle());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[BlackType: \"");
+        sbResult.append(this.getBlackType());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Board: \"");
+        sbResult.append(this.getBoard());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[ECO: \"");
+        sbResult.append(this.getECO());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[EventDate: \"");
+        sbResult.append(this.getEventDate());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[EventSponsor: \"");
+        sbResult.append(this.getEventSponsor());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[FEN: \"");
+        sbResult.append(this.getFEN());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Mode: \"");
+        sbResult.append(this.getMode());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[NIC: \"");
+        sbResult.append(this.getNIC());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Opening: \"");
+        sbResult.append(this.getOpening());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[PlyCount: \"");
+        sbResult.append(this.getPlyCount());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Section: \"");
+        sbResult.append(this.getSection());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[SetUp: \"");
+        sbResult.append(this.getSetUp());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Stage: \"");
+        sbResult.append(this.getStage());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[SubVariation: \"");
+        sbResult.append(this.getSubVariation());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Termination: \"");
+        sbResult.append(this.getTermination());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Time: \"");
+        sbResult.append(this.getTime());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[TimeControl: \"");
+        sbResult.append(this.getTimeControl());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[UTCDate: \"");
+        sbResult.append(this.getUTCDate());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[UTCTime: \"");
+        sbResult.append(this.getUTCTime());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[Variation: \"");
+        sbResult.append(this.getVariation());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[WhiteElo: \"");
+        sbResult.append(this.getWhiteElo());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[WhiteNA: \"");
+        sbResult.append(this.getWhiteNA());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[WhiteTitle: \"");
+        sbResult.append(this.getWhiteTitle());
+        sbResult.append("\"]\r\n");
+        sbResult.append("[WhiteType: \"");
+        sbResult.append(this.getWhiteType());
+        sbResult.append("\"]\r\n");
+        sbResult.append("\r\n");
+        sbResult.append(this.getMoveSection());
+        sbResult.append("\r\n}");
+
+        return sbResult.toString();
+      }
+    public boolean addCustomTagPair(String sName, String sValue) {
+    	return mmapCustomTagPair.put(sName, sValue)==null;
+    } 
+    public boolean modifyCustomTagPair(String sName, String sValue) {
+    	return mmapCustomTagPair.put(sName, sValue)!=null;
+    } 
+    public TreeMap getAllCustomTagPairs() {
+    	return mmapCustomTagPair;
+    }
+    
+    public void finalize() {
+    	mmapCustomTagPair.clear();
+    	mmapCustomTagPair = null;
+    }
+}
