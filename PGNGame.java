@@ -6,13 +6,12 @@ import java.util.TreeMap;
 //import org.chess.pgn.FIDERecord.Sex;
 
 public class PGNGame {
-	
-	// Last change: October 16 2012. 
 
-	// CONSTANTS.
-	private final String FEN_OF_STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-//    private final String END_OF_LINE = "\r\n";  // TODO: to get EOL value from environment.
-	private final String END_OF_LINE = System.getProperty("line.separator");
+    // Last change: October 16 2012. 
+
+    // CONSTANTS.
+    private final String FEN_OF_STARTING_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+    private final String END_OF_LINE = System.getProperty("line.separator");
 
     // MEMBER VARIABLES.
     private String msEvent="?";
@@ -35,9 +34,9 @@ public class PGNGame {
     private String msMode="?"; 
     private String msNIC="?";
     private String msOpening="?";
-    private String msPlyCount = "0";	// setPlyCount is not implemented (it's a computation on sMoveSection).
+    private String msPlyCount = "0";    // setPlyCount is not implemented (it's a computation on sMoveSection).
     private String msSection="?"; 
-    private String msSetUp="0";	// setSetUp is not implemented (it's just of flag returning msFEN==FEN_OF_STARTING_POSITION).
+    private String msSetUp="0";    // setSetUp is not implemented (it's just of flag returning msFEN==FEN_OF_STARTING_POSITION).
     private String msStage="?"; 
     private String msSubVariation="?";
     private String msTermination="normal"; 
@@ -66,14 +65,7 @@ public class PGNGame {
     
     
     public PGNGame() {
-//    	msEvent="?";
-//    	msSite="?";
-//    	msDate="????.??.??";
-//    	msRound="?";
-//    	msWhite="?";
-//    	msBlack="?";
-//    	msResult="*";
-    	reset();
+        reset();
     }
     public void setEvent(String sEvent) {
         msEvent=sEvent;
@@ -90,11 +82,11 @@ public class PGNGame {
     public boolean setDate(String sDate) {
         boolean bReturnValue=false;
 
-//        if (sDate.matches("(\\?{4}|\\d{4})\\.(\\?\\?|0[1-9]|1[0-2])\\.(\\?\\?|0[1-9]|[12]\\d|3(0|1))")) {	// Allows thinks like "2012.04.31" or "2011.02.29" but goes faster.
+//        if (sDate.matches("(\\?{4}|\\d{4})\\.(\\?\\?|0[1-9]|1[0-2])\\.(\\?\\?|0[1-9]|[12]\\d|3(0|1))")) {    // Allows thinks like "2012.04.31" or "2011.02.29" but goes faster.
 //            msDate=sDate;
 //            bReturnValue=true;
 //        }
-        if (sDate.matches("(\\d{4}|\\?{4})\\.(\\d{2}|\\?{2})\\.(\\d{2}|\\?{2})")) {	// Allows thinks like "2012.04.31" or "2011.02.29" but goes faster.
+        if (sDate.matches("(\\d{4}|\\?{4})\\.(\\d{2}|\\?{2})\\.(\\d{2}|\\?{2})")) {    // Allows thinks like "2012.04.31" or "2011.02.29" but goes faster.
             msDate=sDate;
             bReturnValue=true;
         }
@@ -148,22 +140,22 @@ public class PGNGame {
         boolean bReturnValue=false;
         
         if (sResult.equals("0-1") || sResult.equals("1/2-1/2") || sResult.equals("1-0") || sResult.equals("*")) {
-        	if (!msResult.equals(sResult)) {
-        		if (msResult.equals("*")) {
-            		msResult = sResult; 
-            		setMovetextResult(sResult);
-            		bReturnValue = true;
-        		}
-        		else {
-            		msResult = "*"; 
-            		setMovetextResult("*");
-        		}
-    		}
+            if (!msResult.equals(sResult)) {
+                if (msResult.equals("*")) {
+                    msResult = sResult; 
+                    setMovetextResult(sResult);
+                    bReturnValue = true;
+                }
+                else {
+                    msResult = "*"; 
+                    setMovetextResult("*");
+                }
+            }
         }
         else {
-    		msResult="*";
-    		setMovetextResult("*");
-    		bReturnValue = false;
+            msResult="*";
+            setMovetextResult("*");
+            bReturnValue = false;
         }
         
         return bReturnValue;
@@ -171,13 +163,13 @@ public class PGNGame {
 */    
     public void setResult(String sResult) {
        
-        if (sResult.equals("0-1") || sResult.equals("1/2-1/2") || sResult.equals("1-0")) {
-    		msResult = sResult;
-    		this.setMovetextResult(sResult);
+        if (sResult.equals("0-1") || sResult.equals("1/2-1/2") || sResult.equals("1-0") || sResult.equals("*")) {
+            msResult = sResult;
+            this.setMovetextResult(sResult);
         }
         else {
-        	msResult = "*";
-    		this.setMovetextResult("*");
+            msResult = "*";
+            this.setMovetextResult("*");
         }
     }
     public String getResult() {
@@ -188,7 +180,7 @@ public class PGNGame {
         
 //        if (sTitle.matches("(^\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*$")) {
 //      if (sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
-    	  if (sTitle.equals("-") || sTitle.equals("?") || sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
+          if (sTitle.equals("-") || sTitle.equals("?") || sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
 //       if (sTitle.equals("-") || sTitle.equals("?") || sTitle.equals("FM") || sTitle.equals("IM") || sTitle.equals("GM") || sTitle.equals("WFM") || sTitle.equals("WIM") || sTitle.equals("WGM")) {
             msWhiteTitle=sTitle;
             bReturnValue=true;
@@ -204,7 +196,7 @@ public class PGNGame {
 //        if (sTitle.matches("^(\\-|W?(C|F|I|G)M|\\?)(:\\-|W?(C|F|I|G)M|\\?)*$")) {
 //      if (sTitle.matches("(^\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*$")) {
 //      if (sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
-    	  if (sTitle.equals("-") || sTitle.equals("?") || sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
+          if (sTitle.equals("-") || sTitle.equals("?") || sTitle.matches("(\\-|W?[CFIG]M|\\?)(:\\-|W?[CFIG]M|\\?)*")) {
 //          if (sTitle.equals("-") || sTitle.equals("?") || sTitle.equals("FM") || sTitle.equals("IM") || sTitle.equals("GM") || sTitle.equals("WFM") || sTitle.equals("WIM") || sTitle.equals("WGM")) {
             msBlackTitle=sTitle;
             bReturnValue=true;
@@ -266,24 +258,24 @@ public class PGNGame {
         msFEN=sFEN;
 
         if (sFEN.equals(FEN_OF_STARTING_POSITION)) {
-        	msSetUp="0";
+            msSetUp="0";
         }
         else {
-        	msSetUp="1";
+            msSetUp="1";
         }
     }
     public String getFEN() {
         return msFEN;
     }
     public boolean setTimeControl(String sTimeControl) {
-    	boolean bReturnValue=false;
+        boolean bReturnValue=false;
         
-//    	if (sTimeControl.matches("\\?|-|\\*?[1-9][0-9]*|[1-9][0-9]*\\+[1-9][0-9]*|([1-9][0-9]*/[1-9][0-9]*)(:[1-9][0-9]*/[1-9][0-9]*)*(:(\\*?[1-9][0-9]*)|([1-9][0-9]*\\+[1-9][0-9]*))?")) {
-    	if (sTimeControl.matches("(-|\\d+/\\d+:)*(\\*?\\d+|(\\d+(/|\\+)\\d+))|\\?")) {
-        	msTimeControl=sTimeControl;
-        	bReturnValue=true;
-    	}
-    	return bReturnValue;
+//        if (sTimeControl.matches("\\?|-|\\*?[1-9][0-9]*|[1-9][0-9]*\\+[1-9][0-9]*|([1-9][0-9]*/[1-9][0-9]*)(:[1-9][0-9]*/[1-9][0-9]*)*(:(\\*?[1-9][0-9]*)|([1-9][0-9]*\\+[1-9][0-9]*))?")) {
+        if (sTimeControl.matches("(-|\\d+/\\d+:)*(\\*?\\d+|(\\d+(/|\\+)\\d+))|\\?")) {
+            msTimeControl=sTimeControl;
+            bReturnValue=true;
+        }
+        return bReturnValue;
     }
     public String getTimeControl() {
         return msTimeControl;
@@ -399,7 +391,6 @@ public class PGNGame {
            }
         }
 
-
         // ADD "(blitz)" OR "(partie rapide)" COMMENT. 
         if (nTotalTime < 900) {   // nTotalTime < 15 minutes => blitz
            sReturnValue += " (blitz)";
@@ -448,111 +439,111 @@ public class PGNGame {
         return msVariation;
     }
     public void setSubVariation(String sSubVariation) {
-    	msSubVariation = sSubVariation;
+        msSubVariation = sSubVariation;
     }
     public String getSubVariation() {
-    	return msSubVariation;
+        return msSubVariation;
     }
     public String getAnnotator() {
-    	return msAnnotator;
+        return msAnnotator;
     }
     public void setAnnotator(String sAnnotator) {
-    	msAnnotator = sAnnotator;
+        msAnnotator = sAnnotator;
     }
     public String getBoard() {
-    	return msBoard;
+        return msBoard;
     }
     public void setBoard(String sBoard) {
-    	msBoard = sBoard;
+        msBoard = sBoard;
     }
     public String getTime() {
-    	return msTime;
+        return msTime;
     }
     public void setTime(String sTime) {
-//    	if (sTime.matches("(\\?\\?|[01][0-9]|2[0-3]):(\\?\\?|[0-5][0-9]):(\\?\\?|[0-5][0-9])")) {
-        	msTime = sTime;
-//        	bReturnValue=true;
-//    	}
+//        if (sTime.matches("(\\?\\?|[01][0-9]|2[0-3]):(\\?\\?|[0-5][0-9]):(\\?\\?|[0-5][0-9])")) {
+            msTime = sTime;
+//            bReturnValue=true;
+//        }
     }
     public String getSection() {
-    	return msSection;
+        return msSection;
     }
     public void setSection(String sSection) {
-    	msSection = sSection;
+        msSection = sSection;
     }
     public String getTermination() {
-    	return msTermination;
+        return msTermination;
     }
     public void setTermination(String sTermination) {
-    	if (sTermination.matches("abandoned|adjudication|death|emergency|normal|rules infraction|time forfeit|unterminated")) {
-        	msTermination = sTermination;
-    	}
-    	else {
-    		msTermination="normal";
-    	}
+        if (sTermination.matches("abandoned|adjudication|death|emergency|normal|rules infraction|time forfeit|unterminated")) {
+            msTermination = sTermination;
+        }
+        else {
+            msTermination="normal";
+        }
     }
     public String getWhiteNA() {
-    	return msWhiteNA;
+        return msWhiteNA;
     }
     public void setWhiteNA(String sWhiteNA) {
-    	msWhiteNA = sWhiteNA;
+        msWhiteNA = sWhiteNA;
     }
     public String getWhiteType() {
-    	return msWhiteType;
+        return msWhiteType;
     }
     public void setWhiteType(String sWhiteType) {
-    	msWhiteType = sWhiteType;
+        msWhiteType = sWhiteType;
     }
     public String getBlackNA() {
-    	return msBlackNA;
+        return msBlackNA;
     }
     public void setBlackNA(String sBlackNA) {
-    	msBlackNA = sBlackNA;
+        msBlackNA = sBlackNA;
     }
     public String getBlackType() {
-    	return msBlackType;
+        return msBlackType;
     }
     public void setBlackType(String sBlackType) {
-    	msBlackType = sBlackType;
+        msBlackType = sBlackType;
     }
-	public String getPlyCount() {
-		return msPlyCount;	// Avoid recomputing it on each query.
-	}
+    public String getPlyCount() {
+        return msPlyCount;    // Avoid recomputing it on each query.
+    }
     public String getMode() {
-    	return msMode;
+        return msMode;
     }
     public void setMode(String sMode) {
-    	msMode = sMode;
+        msMode = sMode;
     }
     public String getEventDate() {
-    	return msEventDate;
+        return msEventDate;
     }
     public void setEventDate(String sEventDate) {
-    	msEventDate = sEventDate;
+        msEventDate = sEventDate;
     }
     public String getEventSponsor() {
-    	return msEventSponsor;
+        return msEventSponsor;
     }
     public void setEventSponsor(String sEventSponsor) {
-    	msEventSponsor = sEventSponsor;
+        msEventSponsor = sEventSponsor;
     }
     public String getStage() {
-    	return msStage;
+        return msStage;
     }
     public void setStage(String sStage) {
-    	msStage = sStage;
+        msStage = sStage;
     }
     public String getUTCDate() {
-    	return msUTCDate;
+        return msUTCDate;
     }
     public void setUTCDate(String sUTCDate) {
-    	msUTCDate = sUTCDate;
+        msUTCDate = sUTCDate;
     }
     public String getUTCTime() {
-    	return msUTCTime;
+        return msUTCTime;
     }
     public void setUTCTime(String sUTCTime) {
-    	msUTCTime = sUTCTime;
+        msUTCTime = sUTCTime;
     }
     private int computePlyCount_OLD() {
         int nPlyCount = 0;
@@ -623,7 +614,6 @@ public class PGNGame {
               }
            }
         }
-
 
         // RETURN VALUE.
         if (bRoundBracketOpen || bCurlyBracketOpen) {
@@ -794,7 +784,6 @@ public class PGNGame {
         int nRoundBracketOpen = 0;
         int nPos = -1;
 
-
         // DISCARD FIRST LINE IF BEGINNING WITH '%'.
         if (nTextLength > 0 && msMovetext.charAt(0) == '%') {
            // Jump to the end of line.
@@ -825,7 +814,6 @@ public class PGNGame {
               }
            }
         }
-
 
         // BROWSE TEXT.
         while (++nPos < nTextLength) {
@@ -1025,7 +1013,6 @@ public class PGNGame {
            }
         }
 
-
         // RETURN VALUE.
         if (nRoundBracketOpen != 0) {
            nPlyCount = -1;
@@ -1041,140 +1028,140 @@ public class PGNGame {
         int nNAGNumber;
         char cCurrentChar;
         String[] asNAGText = {"", "!", "?", "!!", "??", "!?", "?!",
-							   "forced move",
-							   "singular move",
-							   "worst move",
-							   "drawish position",
-							   "equal chances, quiet position",
-							   "equal chances, active position",
-							   "unclear position",
-							   "White has a slight advantage",
-							   "Black has a slight advantage",
-							   "White has a moderate advantage",
-							   "Black has a moderate advantage",
-							   "White has a decisive advantage",
-							   "Black has a decisive advantage",
-							   "White has a crushing advantage",
-							   "Black has a crushing advantage",
-							   "White is in zugzwang",
-							   "Black is in zugzwang",
-							   "White has a slight space advantage",
-							   "Black has a slight space advantage",
-							   "White has a moderate space advantage",
-							   "Black has a moderate space advantage",
-							   "White has a decisive space advantage",
-							   "Black has a decisive space advantage",
-							   "White has a slight time (development) advantage",
-							   "Black has a slight time (development) advantage",
-							   "White has a moderate time (development) advantage",
-							   "Black has a moderate time (development) advantage",
-							   "White has a decisive time (development) advantage",
-							   "Black has a decisive time (development) advantage",
-							   "White has the initiative",
-							   "Black has the initiative",
-							   "White has a lasting initiative",
-							   "Black has a lasting initiative",
-							   "White has the attack",
-							   "Black has the attack",
-							   "White has insufficient compensation for material deficit",
-							   "Black has insufficient compensation for material deficit",
-							   "White has sufficient compensation for material deficit",
-							   "Black has sufficient compensation for material deficit",
-							   "White has more than adequate compensation for material deficit",
-							   "Black has more than adequate compensation for material deficit",
-							   "White has a slight center control advantage",
-							   "Black has a slight center control advantage",
-							   "White has a moderate center control advantage",
-							   "Black has a moderate center control advantage",
-							   "White has a decisive center control advantage",
-							   "Black has a decisive center control advantage",
-							   "White has a slight kingside control advantage",
-							   "Black has a slight kingside control advantage",
-							   "White has a moderate kingside control advantage",
-							   "Black has a moderate kingside control advantage",
-							   "White has a decisive kingside control advantage",
-							   "Black has a decisive kingside control advantage",
-							   "White has a slight queenside control advantage",
-							   "Black has a slight queenside control advantage",
-							   "White has a moderate queenside control advantage",
-							   "Black has a moderate queenside control advantage",
-							   "White has a decisive queenside control advantage",
-							   "Black has a decisive queenside control advantage",
-							   "White has a vulnerable first rank",
-							   "Black has a vulnerable first rank",
-							   "White has a well protected first rank",
-							   "Black has a well protected first rank",
-							   "White has a poorly protected king",
-							   "Black has a poorly protected king",
-							   "White has a well protected king",
-							   "Black has a well protected king",
-							   "White has a poorly placed king",
-							   "Black has a poorly placed king",
-							   "White has a well placed king",
-							   "Black has a well placed king",
-							   "White has a very weak pawn structure",
-							   "Black has a very weak pawn structure",
-							   "White has a moderately weak pawn structure",
-							   "Black has a moderately weak pawn structure",
-							   "White has a moderately strong pawn structure",
-							   "Black has a moderately strong pawn structure",
-							   "White has a very strong pawn structure",
-							   "Black has a very strong pawn structure",
-							   "White has poor knight placement",
-							   "Black has poor knight placement",
-							   "White has good knight placement",
-							   "Black has good knight placement",
-							   "White has poor bishop placement",
-							   "Black has poor bishop placement",
-							   "White has good bishop placement",
-							   "Black has good bishop placement",
-							   "White has poor rook placement",
-							   "Black has poor rook placement",
-							   "White has good rook placement",
-							   "Black has good rook placement",
-							   "White has poor queen placement",
-							   "Black has poor queen placement",
-							   "White has good queen placement",
-							   "Black has good queen placement",
-							   "White has poor piece coordination",
-							   "Black has poor piece coordination",
-							   "White has good piece coordination",
-							   "Black has good piece coordination",
-							   "White has played the opening very poorly",
-							   "Black has played the opening very poorly",
-							   "White has played the opening poorly",
-							   "Black has played the opening poorly",
-							   "White has played the opening well",
-							   "Black has played the opening well",
-							   "White has played the opening very well",
-							   "Black has played the opening very well",
-							   "White has played the middlegame very poorly",
-							   "Black has played the middlegame very poorly",
-							   "White has played the middlegame poorly",
-							   "Black has played the middlegame poorly",
-							   "White has played the middlegame well",
-							   "Black has played the middlegame well",
-							   "White has played the middlegame very well",
-							   "Black has played the middlegame very well",
-							   "White has played the ending very poorly",
-							   "Black has played the ending very poorly",
-							   "White has played the ending poorly",
-							   "Black has played the ending poorly",
-							   "White has played the ending well",
-							   "Black has played the ending well",
-							   "White has played the ending very well",
-							   "Black has played the ending very well",
-							   "White has slight counterplay",
-							   "Black has slight counterplay",
-							   "White has moderate counterplay",
-							   "Black has moderate counterplay",
-							   "White has decisive counterplay",
-							   "Black has decisive counterplay",
-							   "White has moderate time control pressure",
-							   "Black has moderate time control pressure",
-							   "White has severe time control pressure",
-							   "Black has severe time control pressure"							   
-		};
+                               "forced move",
+                               "singular move",
+                               "worst move",
+                               "drawish position",
+                               "equal chances, quiet position",
+                               "equal chances, active position",
+                               "unclear position",
+                               "White has a slight advantage",
+                               "Black has a slight advantage",
+                               "White has a moderate advantage",
+                               "Black has a moderate advantage",
+                               "White has a decisive advantage",
+                               "Black has a decisive advantage",
+                               "White has a crushing advantage",
+                               "Black has a crushing advantage",
+                               "White is in zugzwang",
+                               "Black is in zugzwang",
+                               "White has a slight space advantage",
+                               "Black has a slight space advantage",
+                               "White has a moderate space advantage",
+                               "Black has a moderate space advantage",
+                               "White has a decisive space advantage",
+                               "Black has a decisive space advantage",
+                               "White has a slight time (development) advantage",
+                               "Black has a slight time (development) advantage",
+                               "White has a moderate time (development) advantage",
+                               "Black has a moderate time (development) advantage",
+                               "White has a decisive time (development) advantage",
+                               "Black has a decisive time (development) advantage",
+                               "White has the initiative",
+                               "Black has the initiative",
+                               "White has a lasting initiative",
+                               "Black has a lasting initiative",
+                               "White has the attack",
+                               "Black has the attack",
+                               "White has insufficient compensation for material deficit",
+                               "Black has insufficient compensation for material deficit",
+                               "White has sufficient compensation for material deficit",
+                               "Black has sufficient compensation for material deficit",
+                               "White has more than adequate compensation for material deficit",
+                               "Black has more than adequate compensation for material deficit",
+                               "White has a slight center control advantage",
+                               "Black has a slight center control advantage",
+                               "White has a moderate center control advantage",
+                               "Black has a moderate center control advantage",
+                               "White has a decisive center control advantage",
+                               "Black has a decisive center control advantage",
+                               "White has a slight kingside control advantage",
+                               "Black has a slight kingside control advantage",
+                               "White has a moderate kingside control advantage",
+                               "Black has a moderate kingside control advantage",
+                               "White has a decisive kingside control advantage",
+                               "Black has a decisive kingside control advantage",
+                               "White has a slight queenside control advantage",
+                               "Black has a slight queenside control advantage",
+                               "White has a moderate queenside control advantage",
+                               "Black has a moderate queenside control advantage",
+                               "White has a decisive queenside control advantage",
+                               "Black has a decisive queenside control advantage",
+                               "White has a vulnerable first rank",
+                               "Black has a vulnerable first rank",
+                               "White has a well protected first rank",
+                               "Black has a well protected first rank",
+                               "White has a poorly protected king",
+                               "Black has a poorly protected king",
+                               "White has a well protected king",
+                               "Black has a well protected king",
+                               "White has a poorly placed king",
+                               "Black has a poorly placed king",
+                               "White has a well placed king",
+                               "Black has a well placed king",
+                               "White has a very weak pawn structure",
+                               "Black has a very weak pawn structure",
+                               "White has a moderately weak pawn structure",
+                               "Black has a moderately weak pawn structure",
+                               "White has a moderately strong pawn structure",
+                               "Black has a moderately strong pawn structure",
+                               "White has a very strong pawn structure",
+                               "Black has a very strong pawn structure",
+                               "White has poor knight placement",
+                               "Black has poor knight placement",
+                               "White has good knight placement",
+                               "Black has good knight placement",
+                               "White has poor bishop placement",
+                               "Black has poor bishop placement",
+                               "White has good bishop placement",
+                               "Black has good bishop placement",
+                               "White has poor rook placement",
+                               "Black has poor rook placement",
+                               "White has good rook placement",
+                               "Black has good rook placement",
+                               "White has poor queen placement",
+                               "Black has poor queen placement",
+                               "White has good queen placement",
+                               "Black has good queen placement",
+                               "White has poor piece coordination",
+                               "Black has poor piece coordination",
+                               "White has good piece coordination",
+                               "Black has good piece coordination",
+                               "White has played the opening very poorly",
+                               "Black has played the opening very poorly",
+                               "White has played the opening poorly",
+                               "Black has played the opening poorly",
+                               "White has played the opening well",
+                               "Black has played the opening well",
+                               "White has played the opening very well",
+                               "Black has played the opening very well",
+                               "White has played the middlegame very poorly",
+                               "Black has played the middlegame very poorly",
+                               "White has played the middlegame poorly",
+                               "Black has played the middlegame poorly",
+                               "White has played the middlegame well",
+                               "Black has played the middlegame well",
+                               "White has played the middlegame very well",
+                               "Black has played the middlegame very well",
+                               "White has played the ending very poorly",
+                               "Black has played the ending very poorly",
+                               "White has played the ending poorly",
+                               "Black has played the ending poorly",
+                               "White has played the ending well",
+                               "Black has played the ending well",
+                               "White has played the ending very well",
+                               "Black has played the ending very well",
+                               "White has slight counterplay",
+                               "Black has slight counterplay",
+                               "White has moderate counterplay",
+                               "Black has moderate counterplay",
+                               "White has decisive counterplay",
+                               "Black has decisive counterplay",
+                               "White has moderate time control pressure",
+                               "Black has moderate time control pressure",
+                               "White has severe time control pressure",
+                               "Black has severe time control pressure"                               
+        };
         // TODO: to improve NAG implementation.
         int nConversionLength = asNAGText.length;
 
@@ -1212,26 +1199,26 @@ public class PGNGame {
         sbReturnValue.append(END_OF_LINE);
         sbReturnValue.append("\\textbf{%");
         sbReturnValue.append(END_OF_LINE);
-		sbReturnValue.append("$\\square$ ");
-		sbReturnValue.append(this.getWhite());
-		sbReturnValue.append(" (");
-		sbReturnValue.append(this.getWhiteElo());
-		sbReturnValue.append(")\\\\");
+        sbReturnValue.append("$\\square$ ");
+        sbReturnValue.append(this.getWhite());
+        sbReturnValue.append(" (");
+        sbReturnValue.append(this.getWhiteElo());
+        sbReturnValue.append(")\\\\");
         sbReturnValue.append(END_OF_LINE);
-		sbReturnValue.append("$\\blacksquare$ ");
-		sbReturnValue.append(this.getBlack());
-		sbReturnValue.append(" (");
-		sbReturnValue.append(this.getBlackElo());
-		sbReturnValue.append(")\\\\");
+        sbReturnValue.append("$\\blacksquare$ ");
+        sbReturnValue.append(this.getBlack());
+        sbReturnValue.append(" (");
+        sbReturnValue.append(this.getBlackElo());
+        sbReturnValue.append(")\\\\");
         sbReturnValue.append(END_OF_LINE);
-		sbReturnValue.append(this.getEvent());
-		sbReturnValue.append(' ');
-		sbReturnValue.append(this.getDate().substring(0,4));
-		sbReturnValue.append(" (");
-		sbReturnValue.append(this.getRound());
-		sbReturnValue.append(") \\hfill ");
-		sbReturnValue.append(this.getECO());
-		sbReturnValue.append("\\\\");
+        sbReturnValue.append(this.getEvent());
+        sbReturnValue.append(' ');
+        sbReturnValue.append(this.getDate().substring(0,4));
+        sbReturnValue.append(" (");
+        sbReturnValue.append(this.getRound());
+        sbReturnValue.append(") \\hfill ");
+        sbReturnValue.append(this.getECO());
+        sbReturnValue.append("\\\\");
         sbReturnValue.append(END_OF_LINE);
         sbReturnValue.append('}');
         sbReturnValue.append(END_OF_LINE);
@@ -1317,27 +1304,27 @@ public class PGNGame {
      *                input string does not end with an end of line marker.
      */
     private String getMovetextResult()  {
-    	String sReturnValue = "*"; 
-    			
-		//  TRIM TRAILING WORD BREAKS (i. e.: EOL and blank spaces chars).
-		char cCurrentChar;
-		int nPos = msMovetext.length();
-		while (--nPos > -1 && (cCurrentChar=msMovetext.charAt(nPos))=='\n' && cCurrentChar=='\r' && cCurrentChar==' ');
-		nPos++;
-		
-		// SEARCH FOR THE LAST WORD BREAK.
-		while (--nPos > -1 && (cCurrentChar = msMovetext.charAt(nPos))!=' ' && cCurrentChar!='\n' && cCurrentChar!='\r');
-		
-		// GET END OF LINE FROM LAST WORD BREAK.
-		if (nPos > -1) {
-			sReturnValue = msMovetext.substring(nPos + 1); // nPos+1 exists since string cannot end with a word the word break (hence the initial trimming).
-		}
-		else {
-			sReturnValue = msMovetext;
-		}
-		
-		return sReturnValue;
-	}
+        String sReturnValue = "*"; 
+                
+        //  TRIM TRAILING WORD BREAKS (i. e.: EOL and blank spaces chars).
+        char cCurrentChar;
+        int nPos = msMovetext.length();
+        while (--nPos > -1 && (cCurrentChar=msMovetext.charAt(nPos))=='\n' && cCurrentChar=='\r' && cCurrentChar==' ');
+        nPos++;
+        
+        // SEARCH FOR THE LAST WORD BREAK.
+        while (--nPos > -1 && (cCurrentChar = msMovetext.charAt(nPos))!=' ' && cCurrentChar!='\n' && cCurrentChar!='\r');
+        
+        // GET END OF LINE FROM LAST WORD BREAK.
+        if (nPos > -1) {
+            sReturnValue = msMovetext.substring(nPos + 1); // nPos+1 exists since string cannot end with a word the word break (hence the initial trimming).
+        }
+        else {
+            sReturnValue = msMovetext;
+        }
+        
+        return sReturnValue;
+    }
     
     /**
      * Movetext can be split into several lines. End of line (EOL) chars
@@ -1363,168 +1350,131 @@ public class PGNGame {
          // TRIMMING TRAILING EOL CHARS.
          char cLastChar;
          if (nTextLength > 0) {
-	         while ((cLastChar=msMovetext.charAt(nTextLength-1))=='\n' || cLastChar=='\r' || cLastChar==' ') {
-	        	 nTextLength--;
-	         }
+             while ((cLastChar=msMovetext.charAt(nTextLength-1))=='\n' || cLastChar=='\r' || cLastChar==' ') {
+                 nTextLength--;
+             }
          }
          
-	     // FIND THE LAST END OF LINE.
-	     char cCurrentChar;
-	     int nBeginOfLastEOL = -1;  // In most cases, "end of line" is made of two characters: "CR" + "LF".
-	     int nEndOfLastEOL = -1;
-	     int nPos = nTextLength;
-	     while (nEndOfLastEOL < --nPos) {
-	        if ((cCurrentChar = msMovetext.charAt(nPos)) == '\n' || cCurrentChar == '\r') {
-	           nEndOfLastEOL = nPos;
-	           if (nPos > 0 && ((cCurrentChar = msMovetext.charAt(--nPos)) == '\r' || cCurrentChar == '\n')) {
-	              nBeginOfLastEOL = nPos;
-	           }
-	           else {
-	              nBeginOfLastEOL = nEndOfLastEOL;
-	           }
-	        }
-	     }
+         // FIND THE LAST END OF LINE.
+         char cCurrentChar;
+         int nBeginOfLastEOL = -1;  // In most cases, "end of line" is made of two characters: "CR" + "LF".
+         int nEndOfLastEOL = -1;
+         int nPos = nTextLength;
+         while (nEndOfLastEOL < --nPos) {
+            if ((cCurrentChar = msMovetext.charAt(nPos)) == '\n' || cCurrentChar == '\r') {
+               nEndOfLastEOL = nPos;
+               if (nPos > 0 && ((cCurrentChar = msMovetext.charAt(--nPos)) == '\r' || cCurrentChar == '\n')) {
+                  nBeginOfLastEOL = nPos;
+               }
+               else {
+                  nBeginOfLastEOL = nEndOfLastEOL;
+               }
+            }
+         }
 
             
-	     // FIND THE PREVIOUS END OF LINE.
-	     int nEndOfPreviousEOL = -1;
-	     if (nBeginOfLastEOL != -1) {
-	        while (nEndOfPreviousEOL < --nPos) {
-	           if ((cCurrentChar = msMovetext.charAt(nPos)) == '\n' || cCurrentChar == '\r') {
-	              nEndOfPreviousEOL = nPos;
-	           }
-	        }
-	     }
+         // FIND THE PREVIOUS END OF LINE.
+         int nEndOfPreviousEOL = -1;
+         if (nBeginOfLastEOL != -1) {
+            while (nEndOfPreviousEOL < --nPos) {
+               if ((cCurrentChar = msMovetext.charAt(nPos)) == '\n' || cCurrentChar == '\r') {
+                  nEndOfPreviousEOL = nPos;
+               }
+            }
+         }
 
             
-	     // FIND THE LAST BLANK SPACE OF LAST LINE.
-	     int nLastBlankSpace = nEndOfLastEOL;    // If there is no last EOL, nEndOfLastEOL == -1.
-	     nPos = nTextLength;
-	     while (nLastBlankSpace < --nPos) {
-	        if (msMovetext.charAt(nPos) == ' ') {
-	           nLastBlankSpace = nPos;
-	        }
-	     }       // If no blank space is found, before last EOL, nLastBlankSpace == nEndOfLastEOL.
+         // FIND THE LAST BLANK SPACE OF LAST LINE.
+         int nLastBlankSpace = nEndOfLastEOL;    // If there is no last EOL, nEndOfLastEOL == -1.
+         nPos = nTextLength;
+         while (nLastBlankSpace < --nPos) {
+            if (msMovetext.charAt(nPos) == ' ') {
+               nLastBlankSpace = nPos;
+            }
+         }       // If no blank space is found, before last EOL, nLastBlankSpace == nEndOfLastEOL.
 
             
-		 // REPLACE THE LAST WORD.
-		if (nEndOfLastEOL==-1) {        // Movetext contains only one line.
-			if (nLastBlankSpace == nEndOfLastEOL) { // Movetext consists in only one word (no blank space found).
-				msMovetext = sResult;
-			}
-			else {                                                                       // Movetext contains several words.
-				if (nLastBlankSpace + BLANK_SPACE_LENGTH + sResult.length() < PGN_STANDARD_LINE_WIDTH_PLUS_ONE) {       // Enough room to place result?
-					msMovetext = msMovetext.substring(0, nLastBlankSpace) + " " + sResult;
-				}
-				else {
-					msMovetext = msMovetext.substring(0, nLastBlankSpace) + END_OF_LINE + sResult;
-				}
-			}
-		}
-		else {                                          // Move text contains several lines.
-			if (nLastBlankSpace == nEndOfLastEOL) { // Last line contains only one word (no blank space found).
-				if (nBeginOfLastEOL - nEndOfPreviousEOL + BLANK_SPACE_LENGTH + sResult.length() < PGN_STANDARD_LINE_WIDTH_PLUS_ONE) {    // Enough room at the last line but one?
-					msMovetext = msMovetext.substring(0, nBeginOfLastEOL) + " " + sResult;
-				}
-				else {
-					msMovetext = msMovetext.substring(0, nBeginOfLastEOL) + END_OF_LINE + sResult;
-				}
-			}
-			else {                                                                  // Last line containts several words.
-				if (nLastBlankSpace - nEndOfLastEOL + BLANK_SPACE_LENGTH + sResult.length() < PGN_STANDARD_LINE_WIDTH_PLUS_ONE) {               // Enough room at the last line?
-					msMovetext = msMovetext.substring(0, nLastBlankSpace) + " " + sResult;
-				}
-				else {
-					msMovetext = msMovetext.substring(0, nLastBlankSpace) + END_OF_LINE + sResult;
-				}
-			}
-		}
-	}
+         // REPLACE THE LAST WORD.
+        if (nEndOfLastEOL==-1) {        // Movetext contains only one line.
+            if (nLastBlankSpace == nEndOfLastEOL) { // Movetext consists in only one word (no blank space found).
+                msMovetext = sResult;
+            }
+            else {                                                                       // Movetext contains several words.
+                if (nLastBlankSpace + BLANK_SPACE_LENGTH + sResult.length() < PGN_STANDARD_LINE_WIDTH_PLUS_ONE) {       // Enough room to place result?
+                    msMovetext = msMovetext.substring(0, nLastBlankSpace) + " " + sResult;
+                }
+                else {
+                    msMovetext = msMovetext.substring(0, nLastBlankSpace) + END_OF_LINE + sResult;
+                }
+            }
+        }
+        else {                                          // Move text contains several lines.
+            if (nLastBlankSpace == nEndOfLastEOL) { // Last line contains only one word (no blank space found).
+                if (nBeginOfLastEOL - nEndOfPreviousEOL + BLANK_SPACE_LENGTH + sResult.length() < PGN_STANDARD_LINE_WIDTH_PLUS_ONE) {    // Enough room at the last line but one?
+                    msMovetext = msMovetext.substring(0, nBeginOfLastEOL) + " " + sResult;
+                }
+                else {
+                    msMovetext = msMovetext.substring(0, nBeginOfLastEOL) + END_OF_LINE + sResult;
+                }
+            }
+            else {                                                                  // Last line containts several words.
+                if (nLastBlankSpace - nEndOfLastEOL + BLANK_SPACE_LENGTH + sResult.length() < PGN_STANDARD_LINE_WIDTH_PLUS_ONE) {               // Enough room at the last line?
+                    msMovetext = msMovetext.substring(0, nLastBlankSpace) + " " + sResult;
+                }
+                else {
+                    msMovetext = msMovetext.substring(0, nLastBlankSpace) + END_OF_LINE + sResult;
+                }
+            }
+        }
+    }
      
     /**
      * This method is paired with setResult().
      * @param sMovetextSection
      */
-	public boolean setMovetext(String sMovetextSection) {
-		boolean bValidValue = true;
-		
-		msMovetext = sMovetextSection;
-		
-		String sMovetextResult = this.getMovetextResult();
-//		String sMovetextResult = this.getResult();
-	        
+    public boolean setMovetext(String sMovetextSection) {
+        boolean bValidValue = true;
+        
+        msMovetext = sMovetextSection;
+        
+        String sMovetextResult = this.getMovetextResult();
+//        String sMovetextResult = this.getResult();
+            
 //        assert msMovetext.charAt(nTextLength-1)!='\n' && msMovetext.charAt(nTextLength)!='\r' : "setMovetextResult(): msMovetext cannot end with an EOL character.";
-		// assert: Result of 7TR is already set.
-		
-		if (!sMovetextResult.equals(this.getResult())) {
+        // assert: Result of 7TR is already set.
+        
+        if (!sMovetextResult.equals(this.getResult())) {
 //        if (sMovetextResult.equals("1-0") || sMovetextResult.equals("1/2-1/2") || sMovetextResult.equals("0-1") || sMovetextResult.equals("*")) {
-//        	if (!sMovetextResult.equals(msResult)) {
-//        		if (msResult.equals("*")) {
+//            if (!sMovetextResult.equals(msResult)) {
+//                if (msResult.equals("*")) {
 //                    msResult=sMovetextResult;
-//            		setMovetextResult(sMovetextResult);
-//        		}
-//        		else {
-//	        		msResult="*";
-//	        		setMovetextResult("*");
-//        		}
-//        	}
-			
-			bValidValue=false;
+//                    setMovetextResult(sMovetextResult);
+//                }
+//                else {
+//                    msResult="*";
+//                    setMovetextResult("*");
+//                }
+//            }
+            
+            bValidValue=false;
         }
 //        else {
-//    		msResult="*";
-//    		setMovetextResult("*");
+//            msResult="*";
+//            setMovetextResult("*");
 //        }
-		
-		// TODO: reinforce PlyCount computation (NAGs, comments, ...).
-//		msPlyCount=String.valueOf((msMovetext.split("[ \n]").length-1)*2/3);	// Avoid recomputing it on each query.
-		msPlyCount=String.valueOf(computePlyCount());	// Avoid recomputing it on each query.
-		
-		return bValidValue;
-	}
+        
+        // TODO: reinforce PlyCount computation (NAGs, comments, ...).
+//        msPlyCount=String.valueOf((msMovetext.split("[ \n]").length-1)*2/3);    // Avoid recomputing it on each query.
+        msPlyCount=String.valueOf(computePlyCount());    // Avoid recomputing it on each query.
+        
+        return bValidValue;
+    }
 
-	public String getMovetext() {
-		// TODO: to return concatenation of msMovetext and msPlyCount.
-    	return msMovetext;
-	}
+    public String getMovetext() {
+        // TODO: to return concatenation of msMovetext and msPlyCount.
+        return msMovetext;
+    }
     public void reset() {
-//        msEvent="";
-//        msSite="";
-//        msDate="";
-//        msRound="";
-//        msWhite="";
-//        msBlack="";
-//        msResult="";
-//        msAnnotator="";
-//        msBlackNA=""; 
-//        msBlackElo="";
-//        msBlackTitle="";
-//        msBlackType=""; 
-//        msBoard="";
-//        msECO="";
-//        msEventDate=""; 
-//        msEventSponsor=""; 
-//        msFEN="";
-//        msMode=""; 
-//        msNIC="";
-//        msOpening="";
-//        msPlyCount="0"; 
-//        msSection=""; 
-//        msSetUp="";
-//        msStage=""; 
-//        msSubVariation="";
-//        msTermination=""; 
-//        msTime=""; 
-//        msTimeControl="";
-//        msUTCDate=""; 
-//        msUTCTime=""; 
-//        msVariation="";
-//        msWhiteElo="";
-//        msWhiteNA=""; 
-//        msWhiteTitle="";
-//        msWhiteType=""; 
-//        msMoveSection="";
-
         msEvent="?";
         msSite="?";
         msDate="????.??.??";
@@ -1564,9 +1514,9 @@ public class PGNGame {
 }
     // TODO: to think to a toStringToExport, to select specific tags to pass to PGNStream.writePGNFile().
     @Override public String toString() {
-    	final String EOL = System.getProperty("line.separator");
-    	final String END_OF_TAG =  "\"]" + EOL;
-    	
+        final String EOL = System.getProperty("line.separator");
+        final String END_OF_TAG =  "\"]" + EOL;
+        
         StringBuilder sbResult = new StringBuilder();
 
         sbResult.append(this.getClass().getName() + " Object {" + EOL);
@@ -1682,19 +1632,19 @@ public class PGNGame {
         return sbResult.toString();
       }
     public boolean addCustomTagPair(String sName, String sValue) {
-    	return mmapCustomTagPair.put(sName, sValue)==null;
+        return mmapCustomTagPair.put(sName, sValue)==null;
     } 
     public boolean modifyCustomTagPair(String sName, String sValue) {
-    	return mmapCustomTagPair.put(sName, sValue)!=null;
+        return mmapCustomTagPair.put(sName, sValue)!=null;
     } 
     public TreeMap<String, String> getAllCustomTagPairs() {
-    	return mmapCustomTagPair;
+        return mmapCustomTagPair;
     }
     public String getCustomTagPair(String sTagName){
-    	return mmapCustomTagPair.get(sTagName);
+        return mmapCustomTagPair.get(sTagName);
     }
     public void finalize() {
-    	mmapCustomTagPair.clear();
-    	mmapCustomTagPair = null;
+        mmapCustomTagPair.clear();
+        mmapCustomTagPair = null;
     }
 }
