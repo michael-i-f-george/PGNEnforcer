@@ -3,7 +3,7 @@ Helper to record a chess game fully respectful of the PGN standard
 
 # Details
 
-* **Events.java** is a container class with the following methods:
+* **Events.java** contains only getters and setters, for the following properties:
   * Name,
   * Site,
   * StartDate,
