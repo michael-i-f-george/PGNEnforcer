@@ -36,10 +36,3 @@ Helper to record a chess game fully respectful of the PGN standard
 * XMLEventsHandler.java
 * XMLFIDERatingsHandler.java
 * tinySQL-2.26.jar
-
-## Old code
-
-* ChessGame.java.bak
-* Events.java.old
-* OLD_FIDERatingList.java
-* OLD_FIDERecord.java
