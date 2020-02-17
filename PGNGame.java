@@ -35,7 +35,7 @@ public class PGNGame {
     private String msMode="?"; 
     private String msNIC="?";
     private String msOpening="?";
-	private String msPlyCount = "0";	// setPlyCount is not implemented (it's a computation on sMoveSection).
+    private String msPlyCount = "0";	// setPlyCount is not implemented (it's a computation on sMoveSection).
     private String msSection="?"; 
     private String msSetUp="0";	// setSetUp is not implemented (it's just of flag returning msFEN==FEN_OF_STARTING_POSITION).
     private String msStage="?"; 
@@ -51,9 +51,9 @@ public class PGNGame {
     private String msWhiteTitle="?";
     private String msWhiteType="?";
 
-	private String msMovetext = "*";
+    private String msMovetext = "*";
     
-	private TreeMap<String, String> mmapCustomTagPair = new TreeMap<String, String>();
+    private TreeMap<String, String> mmapCustomTagPair = new TreeMap<String, String>();
 
     // Custom tags.
     // TODO: remove custom tags from code.
