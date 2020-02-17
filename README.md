@@ -3,7 +3,19 @@ Helper to record a chess game fully respectful of the PGN standard
 
 # Details
 
-* Events.java
+* **Events.java** is a container class with the following methods:
+  * Name,
+  * Site,
+  * StartDate,
+  * EndDate (Date of the last game),
+  * LastRound (How many rounds in this event?),
+  * UserTeam (in a team event, the player plays always in the same team),
+  * Time (!?),
+  * TimeControl,
+  * Section,
+  * DayOfPlay ("Saturday", "Sunday",...).
+
+
 * FIDEColumn.java
 * FIDEPlayer.java
 * FIDEPlayerList.java
