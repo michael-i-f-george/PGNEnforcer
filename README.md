@@ -25,7 +25,10 @@ Helper to record a chess game fully respectful of the PGN standard
 * Main.java
 * NewGamePanel.java
 * PGNGame.java
-* PGNStream.java
+* PGNStream.java, allows
+ * to read a PGN file,
+ * to write a PGN file,
+ * to export a PGN to LaTeX,
 * Performance.java
 * PlayerDBF.java
 * PlayerDBF.java.8859.txt
